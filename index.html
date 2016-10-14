@@ -2,50 +2,149 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,inital-scale=1">
+
 <title>Insert title here</title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <script src="js/seedrandom.js"></script>
 <style>
 #randomTable {
     font-family: monospace;
     font-size: 2.0em;
 }
+#jumbotron{
+ background-image:url("image/w.gif");
+ background-repeat:no-repeat;
+ background-size:cover;
+ background-position:center;
+ margin:0;
+}
+#footer{
+	　height: 100px;
+　position: relative;
+　margin-top: -100px
+}
+body { padding-top: 240px;
+      padding-bottom:40px;
+    background-image:url("image/b.jpg");
+	/*background-size:cover;*/
+	background-position:center;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+
+}
+
+
+nav{
+	margin:0,auto;
+}
+form{
+	background-color:white;
+	margin:0,auto;
+}
+#bottom{
+	padding-body:10;
+	background-color:black;
+	color:white;
+	margin: 0px auto;
+
+}
+
 </style>
 </head>
-<body>
 
-請輸入亂數表的編號：<input type="text" id="txtSeed" value="1234" />
-&nbsp;<input type="button" id="btnGo" value="產生亂數表" />
+<body >
 
-<div id="randomTable">
+<div class="container">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+			<div class="jumbotron" id="jumbotron">
+			
+			  <h1>產生亂數表單:</h1>
+
+			</div>
+
+	<form class="form-inline" role="form">
+		
+	<div class="form-group">
+	
+	<select name="choice" id="choice" class="form-control">
+		<option value="1">數字
+		<option value="2">小寫英文+數字
+		<option value="3">大小寫英文數字
+	</select>
+	<!--<label>輸入行數:<input type="number" name="totalrow" id="totalrow" min="1" required></label>-->
+	</div>
+	
+
+      <div class="form-group">
+      <input type="number" name="totalrow" class="form-control" id="totalrow" min="1" placeholder="請輸入行數" required>
+       <div class="input-group">
+        <input type="text" id="txtSeed"  class="form-control" placeholder="請輸入亂數表編號:ex1234" required>
+      
+   
+	<!--請輸入亂數表的編號：<input type="text" id="txtSeed" value="1234" />-->
+       <span class="input-group-btn">
+	    &nbsp;<input type="button" id="btnGo" class="btn btn-success" value="產生亂數表" />
+	   </span>
+	   </div>
+	</div>
+
+	</form>
+</nav>
 </div>
 
-<script>
 
+	<div id="randomTable">
+	</div>
+
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" id="bottom">
+ <div style="text-align:center;line-height:50px;">陳俊瑋 ra72636@gmail.com</div>
+<nav>
+
+
+
+<script>
 $("#btnGo").click(function () {
+	
+　	if(txtSeed.value==""){
+　		alert("??");}
+　	else{	
     var result = "";
 	// 純數字:
-	var sPool = "0123456789";
+　　var ch = document.getElementById("choice").value;
+ if(ch=="1"){
+	var sPool = "0123456789";}
     // 數字+小寫字母: (去除 l, o)
-    // var sPool = "abcdefghijkmnpqrstuvwxyz0123456789";
+ if(ch=="2"){
+    var sPool = "abcdefghijkmnpqrstuvwxyz0123456789";}
     // 數字+大小寫字母: (去除 I, O, l, o)
-    // var sPool = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789";
+ if(ch=="3"){
+    var sPool = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789";}
 
     Math.seedrandom($("#txtSeed").val()); // 設定亂數種子
 	var iRandom = 0; var ch = "?";
-	for (iRow = 1; iRow <= 10; iRow++) {
+	for (iRow =1 ; iRow <= document.getElementById("totalrow").value; iRow++) {
 		var sLine = (iRow + 100).toString().substr(1, 2) + ": ";
 		for (iCol = 1; iCol <= 10; iCol++) {
 			iRandom = Math.floor(Math.random() * sPool.length);
+			
 			ch = sPool.substr(iRandom, 1);
 			sLine += ch;
 		}
 		result += sLine + "<br>";
 	}
 	$("#randomTable").html(result);
-});
+}});
 
 </script>
-
 </body>
+
 </html>
